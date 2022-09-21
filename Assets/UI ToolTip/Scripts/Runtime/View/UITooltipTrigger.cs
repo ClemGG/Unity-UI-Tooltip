@@ -1,24 +1,23 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Project.View.UIs
+namespace Tooltip.View
 {
 
     /// <summary>
     /// A placer sur les élement d'UI ayant besoin d'afficher le tooltip
     /// </summary>
-    public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class UITooltipTrigger : MonoBehaviour, ITooltipTrigger, IPointerEnterHandler, IPointerExitHandler
     {
         #region Public Fields
 
         [field: SerializeField]
-        private string Header { get; set; }
+        public string Header { get; set; }
 
         [field: SerializeField, TextArea(3, 10), Space(10)]
-        private string Content { get; set; }
+        public string Content { get; set; }
 
         #endregion
-
 
         #region Overrides
 

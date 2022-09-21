@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Project.View.UIs
+namespace Tooltip.View
 {
     [ExecuteInEditMode]
     public class Tooltip : MonoBehaviour

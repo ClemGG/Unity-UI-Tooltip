@@ -1,7 +1,7 @@
 using UnityEngine;
-using Project.Core;
+using Tooltip.Core;
 
-namespace Project.View.UIs
+namespace Tooltip.View
 {
 
     /// <summary>
@@ -12,6 +12,8 @@ namespace Project.View.UIs
     {
         #region Public Fields
 
+        [field: Space(10)]
+        [field: Header("Tooltip")]
         [field: SerializeField]
         private Tooltip Tooltip { get; set; }
 

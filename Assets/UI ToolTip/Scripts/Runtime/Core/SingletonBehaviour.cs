@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Project.Core
+namespace Tooltip.Core
 {
 
     /// <summary>

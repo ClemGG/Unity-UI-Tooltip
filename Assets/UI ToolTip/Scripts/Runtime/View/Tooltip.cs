@@ -95,16 +95,9 @@ namespace Tooltip.View
             //On le descend car son pivot inverse sa position en Y
             anchoredPos.y -= _canvasRT.rect.height;
 
-            //Si le canvas quitte l'écran sur la droite
-            if (anchoredPos.x + _rt.rect.width > _canvasRT.rect.width)
-            {
-                anchoredPos.x = _canvasRT.rect.width - _rt.rect.width;
-            }
-            //Si le canvas quitte l'écran sur le bas
-            if (anchoredPos.y < _rt.rect.height - _canvasRT.rect.height)
-            {
-                anchoredPos.y = _rt.rect.height - _canvasRT.rect.height;
-            }
+            //Confine le tooltip à l'écran
+            anchoredPos.x = Mathf.Clamp(anchoredPos.x, 0f, _canvasRT.rect.width - _rt.rect.width);
+            anchoredPos.y = Mathf.Clamp(anchoredPos.y, _rt.rect.height - _canvasRT.rect.height, 0f);
 
             _rt.anchoredPosition = anchoredPos;
         }

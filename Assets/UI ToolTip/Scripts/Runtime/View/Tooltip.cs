@@ -28,6 +28,8 @@ namespace Tooltip.View
 
         private RectTransform _rt { get; set; }
 
+        private RectTransform _canvasRT { get; set; }
+
         #endregion
 
         #region Mono
@@ -35,6 +37,7 @@ namespace Tooltip.View
         private void Start()
         {
             _rt = GetComponent<RectTransform>();
+            _canvasRT = transform.parent.GetComponent<RectTransform>();
         }
 
         private void Update()
@@ -79,37 +82,31 @@ namespace Tooltip.View
 
         #region Private Methods
 
+        /// <summary>
+        /// Place le Tooltip à la position du curseur
+        /// en veillant à le garder dans les limites de l'écran
+        /// </summary>
         private void SetPosition()
         {
             if (!Application.isPlaying) return;
 
-            Vector2 position = Input.mousePosition;
+            Vector2 anchoredPos = Input.mousePosition / _canvasRT.localScale.x;
 
-            float pivotX = position.x / Screen.width;
-            float pivotY = position.y / Screen.height;
-            float finalPivotX = 0f;
-            float finalPivotY = 0f;
+            //On le descend car son pivot inverse sa position en Y
+            anchoredPos.y -= _canvasRT.rect.height;
 
-            if (pivotX < 0.5) //If mouse on left of screen move tooltip to right of cursor and vice vera
+            //Si le canvas quitte l'écran sur la droite
+            if (anchoredPos.x + _rt.rect.width > _canvasRT.rect.width)
             {
-                finalPivotX = -0.1f;
+                anchoredPos.x = _canvasRT.rect.width - _rt.rect.width;
             }
-            else
+            //Si le canvas quitte l'écran sur le bas
+            if (anchoredPos.y < _rt.rect.height - _canvasRT.rect.height)
             {
-                finalPivotX = 1.01f;
-            }
-
-            if (pivotY < 0.5) //If mouse on lower half of screen move tooltip above cursor and vice versa
-            {
-                finalPivotY = 0;
-            }
-            else
-            {
-                finalPivotY = 1;
+                anchoredPos.y = _rt.rect.height - _canvasRT.rect.height;
             }
 
-            _rt.pivot = new Vector2(finalPivotX, finalPivotY);
-            _rt.position = position;
+            _rt.anchoredPosition = anchoredPos;
         }
 
         #endregion
